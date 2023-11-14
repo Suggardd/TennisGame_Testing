@@ -60,6 +60,108 @@ public class TennisGameTest {
 		game.player1Scored();
 		//Act
 		// This statement should cause an exception
-		game.player1Scored();			
-	}		
+		assertThrows(TennisGameException.class, () -> game.player1Scored());
+	} 
+	
+	@Test
+	public void testTennisGame_Player1Wins() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player1Scored();
+		game.player1Scored();
+		game.player1Scored();
+		
+		String score = game.getScore();
+		assertEquals("player1 wins", score);
+	}
+	
+	
+	@Test
+	public void testTennisGame_Player2Wins() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		assertEquals("player2 wins", score);
+	}
+	
+	@Test (expected = TennisGameException.class)
+	public void testTennisGame_Player2WinsPointAfterGameEnded_ResultsException() throws TennisGameException {
+		//Arrange
+		TennisGame game = new TennisGame();
+		//Act
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		//Act
+		// This statement should cause an exception
+		assertThrows(TennisGameException.class, () -> game.player2Scored());
+	}
+	
+	@Test
+	public void testTennisGame_Player1HasAdvantage1() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player1Scored();
+		
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		game.player1Scored();
+		game.player1Scored();
+		
+		String score = game.getScore();
+		assertEquals("player1 has advantage", score);
+	}
+	
+	@Test
+	public void testTennisGame_Player2HasAdvantage() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		game.player1Scored();
+		game.player1Scored();
+		game.player1Scored();
+		
+		game.player2Scored();
+		
+		String score = game.getScore();
+		assertEquals("player2 has advantage", score);
+	}
+	
+	@Test
+	public void testTennisGame_score15() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		assertEquals("15 - 15", score);
+	}
+	
+	@Test
+	public void testTennisGame_score30() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player2Scored();
+		
+		game.player1Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		assertEquals("30 - 30", score);
+	}
 }
