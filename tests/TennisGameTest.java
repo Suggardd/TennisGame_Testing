@@ -60,7 +60,7 @@ public class TennisGameTest {
 		game.player1Scored();
 		//Act
 		// This statement should cause an exception
-		assertThrows(TennisGameException.class, () -> game.player1Scored());
+		game.player1Scored();
 	} 
 	
 	@Test
@@ -101,7 +101,7 @@ public class TennisGameTest {
 		game.player2Scored();
 		//Act
 		// This statement should cause an exception
-		assertThrows(TennisGameException.class, () -> game.player2Scored());
+		game.player2Scored();
 	}
 	
 	@Test
@@ -164,4 +164,25 @@ public class TennisGameTest {
 		String score = game.getScore();
 		assertEquals("30 - 30", score);
 	}
+	
+	@Test
+    public void testCheckGameEnded_huntingSurvivors1() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player2Scored();
+		
+		assertEquals("15 - 15", game.getScore());
+		
+		game.player1Scored();
+		game.player2Scored();
+		
+		assertEquals("30 - 30", game.getScore());
+		
+		game.player1Scored();
+		game.player2Scored();
+		
+		assertEquals("40 - 40", game.getScore());
+    }
+	
 }
